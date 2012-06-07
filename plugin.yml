@@ -1,0 +1,11 @@
+name: PrivateChests
+main: com.bugfullabs.privatechests.PrivateChests
+version: 0.0.3
+author: Grushenko
+
+commands:
+   pccreate:
+      description: Create new PrivateChest
+      usage: /<command>
+      permission: <plugin name>.pccreate
+      permission-message: You don't have <permission>
