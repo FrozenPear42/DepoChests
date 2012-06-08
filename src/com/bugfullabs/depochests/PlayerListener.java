@@ -1,4 +1,4 @@
-package com.bugfullabs.privatechests;
+package com.bugfullabs.depochests;
 
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -11,9 +11,9 @@ import org.bukkit.inventory.Inventory;
 
 public class PlayerListener implements Listener{
 	
-	public static PrivateChests plugin;
+	public static DepoChests plugin;
 	
-	public PlayerListener(PrivateChests p){
+	public PlayerListener(DepoChests p){
 		plugin = p;
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}

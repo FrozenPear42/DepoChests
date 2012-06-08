@@ -1,4 +1,4 @@
-package com.bugfullabs.privatechests;
+package com.bugfullabs.depochests;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.DoubleChestInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class PrivateChests extends JavaPlugin {
+public class DepoChests extends JavaPlugin {
 	
 	private Logger log;
 	public Map<Player, DoubleChestInventory> ChestsInv = new HashMap<Player, DoubleChestInventory>();
@@ -33,19 +33,39 @@ public class PrivateChests extends JavaPlugin {
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
-		if(cmd.getName().equalsIgnoreCase("pccreate")){
-		
-			if(sender instanceof Player){
-				Player player = (Player) sender;
-				Location loc = player.getLocation();
-				World world = player.getWorld();
-				Block block = world.getBlockAt(loc);
-				block.setType(Material.CHEST);
-
-			}
+		if(cmd.getName().equalsIgnoreCase("depochests")){
 			
-		sender.sendMessage(ChatColor.AQUA + "Chest created.");
-		return true;
+			if(args.length > 1){
+				
+				if(sender instanceof Player){
+					
+					Player player = (Player) sender;
+					
+					switch(args[0]){
+					
+					case "list":
+						for(int i = 0; i < Chests.size(); i++){
+							if(Chests.get(i) != null)
+							player.sendMessage(Integer.toString(i) + ". X:" + Integer.toString((int) Chests.get(i).getX()) + " Y:" + Integer.toString((int) Chests.get(i).getY()) + " Z:" + Integer.toString((int) Chests.get(i).getZ()));	
+						}
+						break;
+					
+					case "set":	
+						//player.
+						break;
+					case "delete":	
+						
+						break;
+					default:
+						player.sendMessage("Wrong usage!");
+						break;
+					}
+				}	
+				
+			}else{
+			sender.sendMessage(ChatColor.GOLD + "[DepoChests]" + ChatColor.WHITE + "Usage: /depochest [add:delete:list]");	
+			}
+			return true;
 		}
 		return false;
 	}
