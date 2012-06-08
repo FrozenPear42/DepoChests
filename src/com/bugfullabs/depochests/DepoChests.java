@@ -7,19 +7,16 @@ import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.DoubleChestInventory;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class DepoChests extends JavaPlugin {
 	
 	private Logger log;
-	public Map<Player, DoubleChestInventory> ChestsInv = new HashMap<Player, DoubleChestInventory>();
+	public Map<Player, Inventory> ChestsInv = new HashMap<Player, Inventory>();
 	public ArrayList<Location> Chests = new ArrayList<Location>(5);
 	
 	public void onEnable(){
@@ -51,7 +48,7 @@ public class DepoChests extends JavaPlugin {
 						break;
 					
 					case "set":	
-						//player.
+						Chests.add(player.getTargetBlock(null, 10).getLocation());
 						break;
 					case "delete":	
 						
