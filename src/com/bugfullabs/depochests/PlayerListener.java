@@ -3,7 +3,6 @@ package com.bugfullabs.depochests;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.inventory.Inventory;
@@ -20,10 +19,18 @@ public class PlayerListener implements Listener{
 	
 	@EventHandler
 	public void onUserLogin(PlayerLoginEvent event){
-		if(!plugin.ChestsInv.containsKey(event.getPlayer())){
-			Inventory chInv = plugin.getServer().createInventory(null, InventoryType.CHEST);
-			plugin.ChestsInv.put(event.getPlayer(), chInv);
+		
+		Inventory inv = FileAPI.getInvFromFile(event.getPlayer(), plugin.getDataFolder());
+		
+		if(inv != null){
+			plugin.log.info(event.getPlayer().getName() + " - DepoChest exists");
+			plugin.ChestsInv.put(event.getPlayer(), inv);
+		}else{
+			inv = plugin.getServer().createInventory(null, 54);
+			plugin.ChestsInv.put(event.getPlayer(), inv);
+			plugin.log.info(event.getPlayer().getName() + " - DepoChest created");	
 		}
+		
 	}
 	
 
