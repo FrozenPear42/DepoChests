@@ -20,7 +20,7 @@ public class PlayerListener implements Listener{
 	@EventHandler
 	public void onUserLogin(PlayerLoginEvent event){
 		
-		Inventory inv = FileAPI.getInvFromFile(event.getPlayer(), plugin.getDataFolder());
+		Inventory inv = null;// = FileAPI.getInvFromFile(event.getPlayer(), plugin.getDataFolder());
 		
 		if(inv != null){
 			plugin.log.info(event.getPlayer().getName() + " - DepoChest exists");

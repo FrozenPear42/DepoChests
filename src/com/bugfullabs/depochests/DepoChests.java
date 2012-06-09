@@ -37,7 +37,7 @@ public class DepoChests extends JavaPlugin {
 	
 	chestsFile = new File(getDataFolder(), "chests.bin");
 	if(chestsFile.exists()){
-		Chests = (ArrayList<Location>) FileAPI.loadFromFile(chestsFile);
+	//	Chests = (ArrayList<Location>) FileAPI.loadFromFile(chestsFile);
 	}
 	
 	
@@ -74,7 +74,7 @@ public class DepoChests extends JavaPlugin {
 						Chests.add(player.getTargetBlock(null, 10).getLocation());
 						player.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "DepoChest created!");
 						
-						FileAPI.saveToFile(Chests, chestsFile);
+						//FileAPI.saveToFile(Chests, chestsFile);
 						player.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Saved!");
 						
 						}else{
@@ -91,7 +91,7 @@ public class DepoChests extends JavaPlugin {
 							Chests.remove(player.getTargetBlock(null, 10).getLocation());
 							player.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "DepoChest removed!");
 							
-							FileAPI.saveToFile(Chests, chestsFile);
+							//FileAPI.saveToFile(Chests, chestsFile);
 							player.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Saved!");
 						}
 						break;
