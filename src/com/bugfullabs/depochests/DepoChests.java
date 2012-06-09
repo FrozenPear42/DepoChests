@@ -82,6 +82,20 @@ public class DepoChests extends JavaPlugin {
 	}
 	
 	public void onDisable(){
+		
+		getServer().broadcastMessage("Saving Depos...");
+		
+		FileAPI.saveLocationList(Chests, chestsFile);
+		
+		Player players[] = getServer().getOnlinePlayers();
+		
+		for(int i = 0; i < players.length; i++){
+		FileAPI.saveInventory(players[i], ChestsInv.get(players[i].getName()), getDataFolder());
+		}
+		
+		getServer().broadcastMessage("Depos saved.");
+			
+		
 	log.info("DepoChests Disabled");
 	}
 	
