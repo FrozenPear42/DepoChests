@@ -19,7 +19,7 @@ public class DepoChests extends JavaPlugin {
 	
 	public Logger log;
 	public Map<Player, Inventory> ChestsInv = new HashMap<Player, Inventory>();
-	public ArrayList<Location> Chests = new ArrayList<Location>(5);
+	public ArrayList<Location> Chests;
 	
 	public static final String PLUGIN_NAME = "DepoChests";
 	
@@ -35,18 +35,20 @@ public class DepoChests extends JavaPlugin {
 	getDataFolder().mkdir();
 	
 	
-	chestsFile = new File(getDataFolder(), "chests.bin");
+	chestsFile = new File(getDataFolder(), "chests.bfl");
 	if(chestsFile.exists()){
-	//	Chests = (ArrayList<Location>) FileAPI.loadFromFile(chestsFile);
+		Chests = FileAPI.loadLocationList(chestsFile, this);
+	}else{
+		Chests = new ArrayList<Location>(5);
 	}
 	
 	
-	log.info("PrivateChests Enabled");
+	log.info("DepoChests Enabled");
 	new PlayerListener(this);
 	}
 	
 	public void onDisable(){
-	log.info("PrivateChest Disabled");
+	log.info("DepoChests Disabled");
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
@@ -74,7 +76,7 @@ public class DepoChests extends JavaPlugin {
 						Chests.add(player.getTargetBlock(null, 10).getLocation());
 						player.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "DepoChest created!");
 						
-						//FileAPI.saveToFile(Chests, chestsFile);
+						FileAPI.saveLocationList(Chests, chestsFile);
 						player.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Saved!");
 						
 						}else{
@@ -91,7 +93,7 @@ public class DepoChests extends JavaPlugin {
 							Chests.remove(player.getTargetBlock(null, 10).getLocation());
 							player.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "DepoChest removed!");
 							
-							//FileAPI.saveToFile(Chests, chestsFile);
+							FileAPI.saveLocationList(Chests, chestsFile);
 							player.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Saved!");
 						}
 						break;
