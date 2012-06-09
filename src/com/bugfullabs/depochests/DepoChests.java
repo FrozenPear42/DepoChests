@@ -18,7 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class DepoChests extends JavaPlugin {
 	
 	public Logger log;
-	public Map<Player, Inventory> ChestsInv = new HashMap<Player, Inventory>();
+	public Map<String, Inventory> ChestsInv = new HashMap<String, Inventory>();
 	public ArrayList<Location> Chests;
 	
 	public static final String PLUGIN_NAME = "DepoChests";
@@ -108,6 +108,18 @@ public class DepoChests extends JavaPlugin {
 			sender.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Usage: /depochests [add:delete:list]");	
 			}
 			return true;
+		}else if(cmd.getName().equalsIgnoreCase("depo")){
+			
+		
+			if(sender instanceof Player){
+			
+				Player player = (Player) sender;
+				
+				Inventory pInv = ChestsInv.get(player.getName());
+			
+				player.openInventory(pInv);	
+			}
+		
 		}
 		return false;
 	}

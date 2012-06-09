@@ -1,11 +1,20 @@
 package com.bugfullabs.depochests;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import com.bugfullabs.depochests.util.CardboardBox;
 
 
 public class FileAPI {
@@ -195,5 +204,66 @@ public class FileAPI {
 	
 	
 	
-
+	public static void saveInventory(Player player, Inventory inv, File folder){
+		
+		File file = new File(folder, "inv_" + player.getName()+".bfl");
+		ArrayList<CardboardBox> list = new ArrayList<CardboardBox>();
+		
+		
+		try {		
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+			
+			ItemStack items[] = new ItemStack[inv.getSize()];
+			items = inv.getContents();
+			
+			for(int i = 0; i < items.length; i++){
+			
+				if(items[i] != null)
+				list.add(new CardboardBox(items[i]));
+			
+			}
+			
+			oos.writeObject(list);
+			oos.flush();
+			oos.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	public static Inventory loadInventory(Player player, File folder, DepoChests plugin){
+		
+		
+		
+		File file = new File(folder, "inv_" + player.getName()+".bfl");
+		
+		if(!file.exists())
+			return null;
+		
+		Inventory inv = plugin.getServer().createInventory(null, 54);	
+	
+		
+		ArrayList<CardboardBox> list = new ArrayList<CardboardBox>();
+		
+		ObjectInputStream ois;
+		try {
+			ois = new ObjectInputStream(new FileInputStream(file));
+			list = (ArrayList<CardboardBox>) ois.readObject(); 
+			
+			for(int i = 0; i < list.size(); i ++){
+				inv.addItem(list.get(i).unbox());
+			}
+				
+		}catch (Exception e) {
+		}
+		return inv;
+		
+	}
+	
 }

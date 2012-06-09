@@ -1,6 +1,6 @@
 name: DepoChests
 main: com.bugfullabs.depochests.DepoChests
-version: 0.1.8
+version: 0.2.3
 author: Grushenko
 
 commands:
@@ -9,4 +9,9 @@ commands:
       usage: /<command>
       permission: <plugin name>.depochests
       permission-message: You don't have <permission>
-   
+   depo:
+      description: Opens DepoChest.
+      usage: /<command>
+      permission: <plugin name>.depo
+      permission-message: You don't have <permission>
+      

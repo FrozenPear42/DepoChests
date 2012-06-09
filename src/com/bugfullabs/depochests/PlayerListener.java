@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 
 
@@ -20,16 +21,27 @@ public class PlayerListener implements Listener{
 	@EventHandler
 	public void onUserLogin(PlayerLoginEvent event){
 		
-		Inventory inv = null;// = FileAPI.getInvFromFile(event.getPlayer(), plugin.getDataFolder());
+		Inventory inv  = FileAPI.loadInventory(event.getPlayer(), plugin.getDataFolder(), plugin);
 		
 		if(inv != null){
 			plugin.log.info(event.getPlayer().getName() + " - DepoChest exists");
-			plugin.ChestsInv.put(event.getPlayer(), inv);
+			plugin.ChestsInv.put(event.getPlayer().getName(), inv);
 		}else{
 			inv = plugin.getServer().createInventory(null, 54);
-			plugin.ChestsInv.put(event.getPlayer(), inv);
+			plugin.ChestsInv.put(event.getPlayer().getName(), inv);
+			
+			FileAPI.saveInventory(event.getPlayer(), inv, plugin.getDataFolder());
+			
 			plugin.log.info(event.getPlayer().getName() + " - DepoChest created");	
 		}
+		
+	}
+	
+	
+	@EventHandler
+	public void onUserLeave(PlayerQuitEvent event){
+		
+		FileAPI.saveInventory(event.getPlayer(), plugin.ChestsInv.get(event.getPlayer().getName()), plugin.getDataFolder());
 		
 	}
 	
@@ -40,7 +52,7 @@ public class PlayerListener implements Listener{
 			
 			if(plugin.Chests.contains(event.getClickedBlock().getLocation())){
 			event.setCancelled(true);
-			Inventory pInv = plugin.ChestsInv.get(event.getPlayer());
+			Inventory pInv = plugin.ChestsInv.get(event.getPlayer().getName());
 			event.getPlayer().openInventory(pInv);	
 			}
 		}
