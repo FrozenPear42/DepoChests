@@ -48,6 +48,10 @@ public class PlayerListener implements Listener{
 
 	@EventHandler
 	public void onItemUsed(PlayerInteractEvent event){
+		
+		if(event == null)
+			return;
+		
 		if(event.getClickedBlock().getType().equals(Material.CHEST)){
 			
 			if(plugin.Chests.contains(event.getClickedBlock().getLocation())){

@@ -43,6 +43,33 @@ public class DepoChests extends JavaPlugin {
 	}
 	
 	
+	
+	getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
+
+		@Override
+		public void run() {
+			
+			getServer().broadcastMessage("Saving Depos...");
+			
+			FileAPI.saveLocationList(Chests, chestsFile);
+			
+			Player players[] = getServer().getOnlinePlayers();
+			
+			for(int i = 0; i < players.length; i++){
+			FileAPI.saveInventory(players[i], ChestsInv.get(players[i].getName()), getDataFolder());
+			}
+			
+			getServer().broadcastMessage("Depos saved.");
+			
+			
+		}
+		
+	}, 12000, 12000);
+	
+	
+	
+	
+	
 	log.info("DepoChests Enabled");
 	new PlayerListener(this);
 	}
@@ -114,10 +141,11 @@ public class DepoChests extends JavaPlugin {
 			if(sender instanceof Player){
 			
 				Player player = (Player) sender;
-				
+				player.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Depo opened.");
 				Inventory pInv = ChestsInv.get(player.getName());
 			
-				player.openInventory(pInv);	
+				player.openInventory(pInv);
+				
 			}
 		
 		}
