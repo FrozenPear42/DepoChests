@@ -43,6 +43,13 @@ public class DepoChests extends JavaPlugin {
 	}
 	
 	
+	Player players[] = getServer().getOnlinePlayers();
+	
+	for(int i = 0; i < players.length; i++){
+	ChestsInv.put(players[i].getName(), FileAPI.loadInventory(players[i], getDataFolder(), this));
+	}
+	
+	
 	
 	getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
 
@@ -64,7 +71,7 @@ public class DepoChests extends JavaPlugin {
 			
 		}
 		
-	}, 12000, 12000);
+	}, 6000, 6000);
 	
 	
 	
@@ -125,6 +132,24 @@ public class DepoChests extends JavaPlugin {
 						}
 						break;
 						
+					case "save":
+					
+						getServer().broadcastMessage("Saving Depos...");
+						
+						FileAPI.saveLocationList(Chests, chestsFile);
+						
+						Player players[] = getServer().getOnlinePlayers();
+						
+						for(int i = 0; i < players.length; i++){
+						FileAPI.saveInventory(players[i], ChestsInv.get(players[i].getName()), getDataFolder());
+						}
+						
+						getServer().broadcastMessage("Depos saved.");
+						
+					
+						break;
+						
+						
 					default:
 						player.sendMessage("Wrong usage!");
 						break;
@@ -132,12 +157,12 @@ public class DepoChests extends JavaPlugin {
 				}	
 				
 			}else{
-			sender.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Usage: /depochests [add:delete:list]");	
+			sender.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Usage: /depochests [add:delete:list:save]");	
 			}
 			return true;
 		}else if(cmd.getName().equalsIgnoreCase("depo")){
 			
-		
+
 			if(sender instanceof Player){
 			
 				Player player = (Player) sender;
@@ -147,7 +172,7 @@ public class DepoChests extends JavaPlugin {
 				player.openInventory(pInv);
 				
 			}
-		
+		return true;
 		}
 		return false;
 	}

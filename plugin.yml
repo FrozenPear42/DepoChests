@@ -1,17 +1,31 @@
 name: DepoChests
 main: com.bugfullabs.depochests.DepoChests
-version: 0.2.5
+version: 0.2.7
 author: Grushenko
 
 commands:
    depochests:
       description: Basic DepoChests command.
       usage: /<command>
-      permission: <plugin name>.depochests
+      permission: depochests.depochests
       permission-message: You don't have <permission>
    depo:
       description: Opens DepoChest.
       usage: /<command>
-      permission: <plugin name>.depo
-      permission-message: You don't have <permission>
+      permission: depochests.depo
+      permission-message: You don't have <permission>  
       
+      
+permissions:
+    depochests.*:
+        description: Gives access to all DepoChests commands
+        children:
+            depochests.depochests: false
+            depochests.depo: false
+    depochests.depochests:
+        description: Allows you to perform DepoChests admin commands.
+        default: op
+    depochests.depo:
+        description: Allows you to open your depo using a command.
+        default: op
+  
