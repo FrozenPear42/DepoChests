@@ -1,8 +1,10 @@
 package com.bugfullabs.depochests;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -27,7 +29,7 @@ public class PlayerListener implements Listener{
 			plugin.log.info(event.getPlayer().getName() + " - DepoChest exists");
 			plugin.ChestsInv.put(event.getPlayer().getName(), inv);
 		}else{
-			inv = plugin.getServer().createInventory(null, 54);
+			inv = plugin.getServer().createInventory(null, 54, "DepoChest");
 			plugin.ChestsInv.put(event.getPlayer().getName(), inv);
 			
 			FileAPI.saveInventory(event.getPlayer(), inv, plugin.getDataFolder());
@@ -49,15 +51,23 @@ public class PlayerListener implements Listener{
 	@EventHandler
 	public void onItemUsed(PlayerInteractEvent event){
 		
-		if(event == null)
+		if(event == null || event.getClickedBlock() == null)
 			return;
 		
 		if(event.getClickedBlock().getType().equals(Material.CHEST)){
 			
+			
+			
 			if(plugin.Chests.contains(event.getClickedBlock().getLocation())){
-			event.setCancelled(true);
+			
+				event.setCancelled(true);
+				
+				if(event.getAction() == Action.LEFT_CLICK_BLOCK){
+				event.getPlayer().sendMessage(ChatColor.GOLD + "[" + DepoChests.PLUGIN_NAME  + "]" + ChatColor.WHITE + "You can not destroy DepoChest!");
+				}else{	
 			Inventory pInv = plugin.ChestsInv.get(event.getPlayer().getName());
 			event.getPlayer().openInventory(pInv);	
+			}
 			}
 		}
 	}

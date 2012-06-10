@@ -246,8 +246,7 @@ public class FileAPI {
 		if(!file.exists())
 			return null;
 		
-		Inventory inv = plugin.getServer().createInventory(null, 54);	
-	
+		Inventory inv = plugin.getServer().createInventory(null, 54, "DepoChest");	
 		
 		ArrayList<CardboardBox> list = new ArrayList<CardboardBox>();
 		
@@ -265,5 +264,7 @@ public class FileAPI {
 		return inv;
 		
 	}
+	
+	
 	
 }
