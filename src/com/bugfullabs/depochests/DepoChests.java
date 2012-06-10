@@ -47,7 +47,12 @@ public class DepoChests extends JavaPlugin {
 	Player players[] = getServer().getOnlinePlayers();
 	
 	for(int i = 0; i < players.length; i++){
-	ChestsInv.put(players[i].getName(), FileAPI.loadInventory(players[i], getDataFolder(), this));
+	
+		Inventory inv = FileAPI.loadInventory(players[i], getDataFolder(),this);
+		if(inv != null)
+		ChestsInv.put(players[i].getName(), inv);
+		else
+		ChestsInv.put(players[i].getName(), this.getServer().createInventory(null, 54, "DepoChest"));	
 	}
 	
 	
@@ -91,7 +96,10 @@ public class DepoChests extends JavaPlugin {
 		Player players[] = getServer().getOnlinePlayers();
 		
 		for(int i = 0; i < players.length; i++){
+		
+		if(ChestsInv.get(players[i].getName()) != null)	
 		FileAPI.saveInventory(players[i], ChestsInv.get(players[i].getName()), getDataFolder());
+		
 		}
 		
 		getServer().broadcastMessage("Depos saved.");
@@ -166,17 +174,19 @@ public class DepoChests extends JavaPlugin {
 						
 					case "deleteall":
 						
-						if(args.length < 2){
+						if(args.length < 1){
 							sender.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Usage: /depochests deleteall[chests:invs]");			
 							break;
 						}
 							
-						if(args[1] == "chests")
+
+						if(args[1].equalsIgnoreCase("chests"))
 						{
 						Chests.clear();
 						chestsFile.delete();
-						}else if(args[1] == "invs")
-						{
+						this.getServer().reload();
+						
+						}else if(args[1].equalsIgnoreCase("invs")){
 						ChestsInv.clear();	
 						
 						File files[] = getDataFolder().listFiles(new FileFilter() {
@@ -198,9 +208,11 @@ public class DepoChests extends JavaPlugin {
 						for(int i = 0; i < files.length; i++){
 							files[i].delete();
 						}
+						this.getServer().reload();
 						
 						}else{
-						sender.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Usage: /depochests deleteall[chests:invs]");			
+						
+						sender.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Usage: /depochests deleteall[chests:invs]2");			
 						}
 						break;
 						
