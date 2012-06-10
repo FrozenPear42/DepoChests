@@ -63,7 +63,7 @@ public class PlayerListener implements Listener{
 				event.setCancelled(true);
 				
 				if(event.getAction() == Action.LEFT_CLICK_BLOCK){
-				event.getPlayer().sendMessage(ChatColor.GOLD + "[" + DepoChests.PLUGIN_NAME  + "]" + ChatColor.WHITE + "You can not destroy DepoChest!");
+				event.getPlayer().sendMessage(ChatColor.GOLD + "[" + DepoChests.PLUGIN_NAME  + "]" + ChatColor.WHITE + "You can't destroy DepoChest!");
 				}else{	
 			Inventory pInv = plugin.ChestsInv.get(event.getPlayer().getName());
 			event.getPlayer().openInventory(pInv);	

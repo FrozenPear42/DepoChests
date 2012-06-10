@@ -179,15 +179,25 @@ public class DepoChests extends JavaPlugin {
 						{
 						ChestsInv.clear();	
 						
-						getDataFolder().listFiles(new FileFilter() {
+						File files[] = getDataFolder().listFiles(new FileFilter() {
 							@Override
 							public boolean accept(File pathname) {
-								//if pathname.getName().
+								
+								char buff[] = new char[3];
+								buff[0] = pathname.getName().charAt(0);
+								buff[1] = pathname.getName().charAt(1);
+								buff[2] = pathname.getName().charAt(2);
+								
+								if(String.valueOf(buff) == "inv")
+									return true;
+								
 								return false;
 							}
 						});
 						
-						new File(getDataFolder(), "inv_"+""+".bfl").delete();
+						for(int i = 0; i < files.length; i++){
+							files[i].delete();
+						}
 						
 						}else{
 						sender.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Usage: /depochests deleteall[chests:invs]");			
@@ -202,7 +212,7 @@ public class DepoChests extends JavaPlugin {
 				}	
 				
 			}else{
-			sender.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Usage: /depochests [add:delete:list:save:deleteall[chests:invs]]");	
+			sender.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Usage: /depochests [add:delete:list:save:deleteall [chests:invs]]");	
 			}
 			return true;
 		}else if(cmd.getName().equalsIgnoreCase("depo")){
