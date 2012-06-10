@@ -163,6 +163,19 @@ public class DepoChests extends JavaPlugin {
 					
 						break;
 						
+					case "deleteall":
+						
+						if(args[1] == "chests")
+						{
+						Chests.clear();
+						}else if(args[1] == "invs")
+						{
+						ChestsInv.clear();	
+						}else{
+						sender.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Usage: /depochests deleteall[chests:invs]");			
+						}
+						break;
+						
 						
 					default:
 						player.sendMessage("Wrong usage!");
@@ -171,7 +184,7 @@ public class DepoChests extends JavaPlugin {
 				}	
 				
 			}else{
-			sender.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Usage: /depochests [add:delete:list:save]");	
+			sender.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Usage: /depochests [add:delete:list:save:deleteall[chests:invs]]");	
 			}
 			return true;
 		}else if(cmd.getName().equalsIgnoreCase("depo")){
