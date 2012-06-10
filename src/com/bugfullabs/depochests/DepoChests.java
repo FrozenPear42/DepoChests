@@ -1,6 +1,7 @@
 package com.bugfullabs.depochests;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -165,12 +166,29 @@ public class DepoChests extends JavaPlugin {
 						
 					case "deleteall":
 						
+						if(args.length < 2){
+							sender.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Usage: /depochests deleteall[chests:invs]");			
+							break;
+						}
+							
 						if(args[1] == "chests")
 						{
 						Chests.clear();
+						chestsFile.delete();
 						}else if(args[1] == "invs")
 						{
 						ChestsInv.clear();	
+						
+						getDataFolder().listFiles(new FileFilter() {
+							@Override
+							public boolean accept(File pathname) {
+								//if pathname.getName().
+								return false;
+							}
+						});
+						
+						new File(getDataFolder(), "inv_"+""+".bfl").delete();
+						
 						}else{
 						sender.sendMessage(ChatColor.GOLD + "[" + PLUGIN_NAME  + "]" + ChatColor.WHITE + "Usage: /depochests deleteall[chests:invs]");			
 						}
